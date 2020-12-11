@@ -220,6 +220,7 @@ addDnat(){
     }
 
     echo -n "目标域名/IP:" ;read remotehost
+    echo -n "本机ip:" ;read localIP && localIP=${localIP}
     # # 检查输入的不是IP
     # if [ "$remotehost" = "" -o "$(echo  $remotehost |grep -E -o '([0-9]{1,3}[\.]){3}[0-9]{1,3}')" != "" ];then
     #     isip=true
