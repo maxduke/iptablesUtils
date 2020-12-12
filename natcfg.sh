@@ -92,10 +92,24 @@ dnat(){
         local remoteport=$3
 
         cat >> $lastConfigTmp <<EOF
-iptables -t nat -A PREROUTING -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -A PREROUTING -p udp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 23.246.0.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 37.77.184.0/21 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 45.57.0.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 64.120.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 66.197.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 108.175.32.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 192.173.64.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 198.38.96.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 198.45.48.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 8.41.4.0/24 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 69.53.224.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 185.2.220.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 185.9.188.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 203.75.0.0/16 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 207.45.72.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 208.75.76.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+
 iptables -t nat -A POSTROUTING -p tcp -d $remote --dport $remoteport -j SNAT --to-source $localIP
-iptables -t nat -A POSTROUTING -p udp -d $remote --dport $remoteport -j SNAT --to-source $localIP
 EOF
     }
 }
@@ -134,7 +148,7 @@ if [ "${localIP}" = "" ]; then
 fi
 echo  "本机网卡IP [$localIP]"
 cat > $lastConfigTmp <<EOF
-iptables -t nat -F PREROUTING
+iptables -t nat -F OUTPUT
 iptables -t nat -F POSTROUTING
 EOF
 arr1=(`cat $conf`)
@@ -156,7 +170,7 @@ if [ "$firstAfterBoot" = "1" -o "$lastConfigTmpStr" != "$lastConfigStr" ];then
     cat $lastConfigTmp > $lastConfig
     echo '更新iptables规则[DONE]，新规则如下：'
     echo "###########################################################"
-    iptables -L PREROUTING -n -t nat --line-number
+    iptables -L OUTPUT -n -t nat --line-number
     iptables -L POSTROUTING -n -t nat --line-number
     echo "###########################################################"
 else
@@ -209,6 +223,7 @@ addDnat(){
     local localport=
     local remoteport=
     local remotehost=
+	local localIP=
     local valid=
     echo -n "本地端口号:" ;read localport
     echo -n "远程端口号:" ;read remoteport
@@ -220,7 +235,6 @@ addDnat(){
     }
 
     echo -n "目标域名/IP:" ;read remotehost
-    echo -n "本机ip:" ;read localIP && localIP=${localIP}
     # # 检查输入的不是IP
     # if [ "$remotehost" = "" -o "$(echo  $remotehost |grep -E -o '([0-9]{1,3}[\.]){3}[0-9]{1,3}')" != "" ];then
     #     isip=true
@@ -307,7 +321,7 @@ do
         ;;
     查看当前iptables配置)
         echo "###########################################################"
-        iptables -L PREROUTING -n -t nat --line-number
+        iptables -L OUTPUT -n -t nat --line-number
         iptables -L POSTROUTING -n -t nat --line-number
         echo "###########################################################"
         ;;
