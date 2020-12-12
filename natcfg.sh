@@ -92,24 +92,24 @@ dnat(){
         local remoteport=$3
 
         cat >> $lastConfigTmp <<EOF
-iptables -t nat -I OUTPUT  -d 23.246.0.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 37.77.184.0/21 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 45.57.0.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 64.120.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 66.197.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 108.175.32.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 192.173.64.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 198.38.96.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 198.45.48.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 8.41.4.0/24 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 69.53.224.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 185.2.220.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 185.9.188.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 203.75.0.0/16 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 207.45.72.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
-iptables -t nat -I OUTPUT  -d 208.75.76.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote:$remoteport
+iptables -t nat -I OUTPUT  -d 23.246.0.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 37.77.184.0/21 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 45.57.0.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 64.120.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 66.197.128.0/17 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 108.175.32.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 192.173.64.0/18 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 198.38.96.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 198.45.48.0/20 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 8.41.4.0/24 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 69.53.224.0/19 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 185.2.220.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 185.9.188.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 203.75.0.0/16 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 207.45.72.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
+iptables -t nat -I OUTPUT  -d 208.75.76.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
 
-iptables -t nat -A POSTROUTING -p tcp -d $remote --dport $remoteport -j SNAT --to-source $localIP
+iptables -t nat -A POSTROUTING -p tcp -d $remote -j SNAT --to-source $localIP
 EOF
     }
 }
