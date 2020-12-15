@@ -109,6 +109,9 @@ iptables -t nat -I OUTPUT  -d 203.75.0.0/16 -p tcp --dport $localport -j DNAT --
 iptables -t nat -I OUTPUT  -d 207.45.72.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
 iptables -t nat -I OUTPUT  -d 208.75.76.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
 iptables -t nat -I OUTPUT  -d 1.0.0.1 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
+iptables -t nat -I OUTPUT  -d 1.1.1.1 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
+iptables -t nat -I OUTPUT  -d 8.8.8.8 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
+iptables -t nat -I OUTPUT  -d 8.8.4.4 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
 iptables -t nat -A POSTROUTING -p tcp -d $remote -j SNAT --to-source $localIP
 EOF
     }
