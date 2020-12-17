@@ -108,8 +108,7 @@ iptables -t nat -I OUTPUT  -d 185.9.188.0/22 -p tcp --dport $localport -j DNAT -
 iptables -t nat -I OUTPUT  -d 203.75.0.0/16 -p tcp --dport $localport -j DNAT --to-destination $remote
 iptables -t nat -I OUTPUT  -d 207.45.72.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
 iptables -t nat -I OUTPUT  -d 208.75.76.0/22 -p tcp --dport $localport -j DNAT --to-destination $remote
-iptables -t nat -I OUTPUT  -d 1.0.0.1 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
-iptables -t nat -I OUTPUT  -d 8.8.4.4 -p tcp --dport 53 -j DNAT --to-destination 127.0.0.1
+iptables -t nat -A OUTPUT -p tcp --dport 53 -j REDIRECT --to-ports 53
 iptables -t nat -A POSTROUTING -p tcp -d $remote -j SNAT --to-source $localIP
 EOF
     }
@@ -298,7 +297,7 @@ done
 
 
 echo  -e "${red}你要做什么呢（请输入数字）？Ctrl+C 退出本脚本${black}"
-select todo in 增加转发规则 删除转发规则 列出所有转发规则 查看当前iptables配置
+select todo in 增加转发规则 删除转发规则 列出所有转发规则 查看当前iptables配置  安装smartdns 卸载smartdns
 do
     case $todo in
     增加转发规则)
@@ -325,6 +324,24 @@ do
         iptables -L OUTPUT -n -t nat --line-number
         iptables -L POSTROUTING -n -t nat --line-number
         echo "###########################################################"
+        ;;
+    安装smartdns)
+        wget https://github.com/pymumu/smartdns/releases/download/Release33/smartdns.1.2020.09.08-2235.x86_64-debian-all.deb
+        dpkg -i smartdns*.deb
+        rm -rf smartdns*.deb
+        wget https://raw.githubusercontent.com/nameless3721/nash/master/smartdns.conf
+        mv -f smartdns.conf /etc/smartdns/
+        apt-get -y install resolvconf
+        echo -e "nameserver 127.0.0.1\nnameserver 1.0.0.1" >>/etc/resolvconf/resolv.conf.d/head
+        systemctl restart resolvconf
+        systemctl restart smartdns
+        systemctl enable smartdns		
+        ;;
+    卸载smartdns)
+        dpkg --purge smartdns
+        sed -i "s/nameserver 127.0.0.1/ /g" /etc/resolvconf/resolv.conf.d/head
+        systemctl restart resolvconf
+        apt-get -y remove --purge resolvconf
         ;;
     *)
         echo "如果要退出，请按Ctrl+C"
