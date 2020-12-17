@@ -331,6 +331,9 @@ do
         rm -rf smartdns*.deb
         wget https://raw.githubusercontent.com/nameless3721/nash/master/smartdns.conf
         mv -f smartdns.conf /etc/smartdns/
+        read -p "输入nf解锁dns默认127.0.0.1" port
+        [ -z "${port}" ] && port='127.0.0.1'
+        sed -i "s/#server 88.88.88.88 -group nf/server $port -group nf/g" /etc/smartdns/smartdns.conf
         apt-get -y install resolvconf
         echo -e "nameserver 127.0.0.1\nnameserver 1.0.0.1" >>/etc/resolvconf/resolv.conf.d/head
         systemctl restart resolvconf
