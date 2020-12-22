@@ -299,10 +299,10 @@ done
 
 
 echo  -e "${red}你要做什么呢（请输入数字）？Ctrl+C 退出本脚本${black}"
-select todo in 劫持tvnfip 删除转发规则 列出所有转发规则 查看当前iptables配置  安装smartdns 卸载smartdns
+select todo in 劫持tvnf 删除转发规则 列出所有转发规则 查看当前iptables配置  安装smartdns 卸载smartdns
 do
     case $todo in
-    劫持tvnfip)
+    劫持tvnf)
         addDnat
         #break
         ;;
