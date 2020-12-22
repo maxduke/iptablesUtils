@@ -14,6 +14,8 @@ touch $conf
     echo "# Website:  http://www.arloor.com/                          #"
     echo "# Author: ARLOOR <admin@arloor.com>                         #"
     echo "# Github: https://github.com/arloor/iptablesUtils           #"
+    echo "# 端口都填443目标netflix.com 劫持tcp53dns需本地支持tcp53dns   #"
+    echo "# smartdns不支持centos自行 https://pymumu.github.io/smartdns #"
     echo "#############################################################"
     echo
 
@@ -297,7 +299,7 @@ done
 
 
 echo  -e "${red}你要做什么呢（请输入数字）？Ctrl+C 退出本脚本${black}"
-select todo in 增加转发规则 删除转发规则 列出所有转发规则 查看当前iptables配置  安装smartdns 卸载smartdns
+select todo in 增加转发规则输入监听443 删除转发规则 列出所有转发规则 查看当前iptables配置  安装smartdns 卸载smartdns
 do
     case $todo in
     增加转发规则)
