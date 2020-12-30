@@ -7,7 +7,6 @@ Type=simple
 LimitAS=infinity
 LimitRSS=infinity
 LimitCORE=infinity
-LimitNOFILE=65535
 ExecStart=/usr/sbin/ipset restore -f /etc/nfset/nflist.txt
 Restart=always
 RestartSec=10
