@@ -328,11 +328,11 @@ do
         echo "###########################################################"
         ;;
     安装smartdns)
-        wget https://github.com/pymumu/smartdns/releases/download/Release33/smartdns.1.2020.09.08-2235.x86_64-debian-all.deb
+        wget https://github.com/nameless3721/nash/raw/master/smartdns.1.2021.04.26-1657.all.deb
         dpkg -i smartdns*.deb
         rm -rf smartdns*.deb
-        wget https://raw.githubusercontent.com/nameless3721/nash/master/smartdns.conf
-        mv -f smartdns.conf /etc/smartdns/
+        #wget https://raw.githubusercontent.com/nameless3721/nash/master/smartdns.conf
+        #mv -f smartdns.conf /etc/smartdns/
         read -p "输入nf解锁dns默认1.0.0.1" netflix
         [ -z "${netflix}" ] && netflix='1.0.0.1'
         sed -i "s/#server 88.88.88.88 -group nf/server $netflix -group nf/g" /etc/smartdns/smartdns.conf
